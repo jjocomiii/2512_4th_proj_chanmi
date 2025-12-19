@@ -18,16 +18,16 @@ CREATE TABLE environment_data (
 );
 
 -- 사전 등록된 출입 승인자 정보 테이블
--- 인증 방식이 확정되지 않아 최소 정보만 저장하도록 생성
 CREATE TABLE admins (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  admin_code VARCHAR(50) UNIQUE NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_id VARCHAR(50) UNIQUE NOT NULL,        -- RFID 태그 고유번호
+    access_points VARCHAR(255) NOT NULL          -- 출입 가능한 지점, 콤마 구분
 );
 
 -- 출입 인증 시도 기록 테이블
 CREATE TABLE access_logs (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  admin_id INT,
+  admin_id VARCHAR(50),
   access_point VARCHAR(50),
   result ENUM('success', 'fail') NOT NULL,
   access_time DATETIME DEFAULT CURRENT_TIMESTAMP

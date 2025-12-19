@@ -6,7 +6,6 @@ import time
 BROKER = "10.10.14.109"
 PORT = 1883
 
-
 # ================================
 #  MQTT Client Init
 # ================================
@@ -20,16 +19,16 @@ except Exception as e:
 
 
 # ================================
-#  Environment (temperature/humidity)
+#  Environment (t / h)
 # ================================
 def publish_environment():
     """
     온습도 센서 값 발행
-    실제 센서 연동 시 여기만 교체하면 됨
+    실제 센서 연동 시 STM은 {"t": ..., "h": ...} 형태로 보내도록 통일
     """
     data = {
-        "temperature": round(random.uniform(18.0, 30.0), 2),
-        "humidity": round(random.uniform(30.0, 70.0), 2)
+        "t": round(random.uniform(18.0, 30.0), 2),
+        "h": round(random.uniform(30.0, 70.0), 2)
     }
 
     client.publish("ess/env", json.dumps(data))
@@ -51,9 +50,7 @@ def publish_alert(event_type: str, level: str, value: float):
     공통 Alert 발행 함수
     event_type: "gas", "thermal"
     level: "warning" 또는 "critical"
-    value: 센서 측정값
     """
-
     alert = {
         "event_type": event_type,
         "level": level,
@@ -89,14 +86,14 @@ def check_and_publish_thermal():
 # ================================
 #  Access Request (출입 인증 요청)
 # ================================
-def publish_access_request(admin_code: str, access_point: str):
+def publish_access_request(admin_id: str, access_point: str):
     """
     출입 인증 요청 발행
-    admin_code : 등록된 관리자 코드
-    access_point : 출입 지점(ex: main_door, storage_room)
+    admin_id : 등록된 관리자 RFID 코드
+    access_point : 출입 지점(ex: ew2, main)
     """
     request = {
-        "admin_code": admin_code,
+        "admin_id": admin_id,           # 오늘 기준 표준 키
         "access_point": access_point
     }
 
@@ -116,8 +113,8 @@ def main():
             check_and_publish_gas()
             check_and_publish_thermal()
 
-            # 수동 테스트 필요 시 직접 호출
-            # publish_access_request("admin001", "main_door")
+            # 수동 테스트 시 사용
+            # publish_access_request("RFID_123456", "ew2")
 
             time.sleep(5)
 
