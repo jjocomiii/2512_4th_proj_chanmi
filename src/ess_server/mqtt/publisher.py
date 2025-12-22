@@ -114,7 +114,8 @@ def main():
             check_and_publish_thermal()
 
             # 수동 테스트 시 사용
-            # publish_access_request("RFID_123456", "ew2")
+            publish_access_request("RFID_123456", "ew2")
+            publish_access_request("RFID_123456", "main")
 
             time.sleep(5)
 
