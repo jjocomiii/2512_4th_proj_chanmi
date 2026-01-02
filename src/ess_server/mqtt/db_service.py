@@ -16,9 +16,9 @@ except Exception as e:
 def save_environment(data):
     try:
         _cursor.execute("""
-            INSERT INTO environment_data (temperature, humidity)
-            VALUES (%s, %s)
-        """, (data["temperature"], data["humidity"]))
+            INSERT INTO environment_data (temperature, humidity, fan, reason)
+            VALUES (%s, %s, %s, %s)
+        """, (data["temperature"], data["humidity"], data["fan"], data["reason"]))
         _db.commit()
         print("[DB] Environment data saved.")
     except Exception as e:

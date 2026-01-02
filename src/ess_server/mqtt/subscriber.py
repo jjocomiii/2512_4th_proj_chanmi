@@ -52,11 +52,13 @@ def on_message(client, userdata, msg):
 # Environment / Alert Handlers
 # ================================
 def handle_environment(data):
-    # STM32 발행 JSON: {"t": 23.1, "h": 55.3}
+    # STM32 발행 JSON: {"t": 23.1, "h": 55.3, "fan": "ON", "reason": "TEMP"}
     temp = data.get("t")
     humid = data.get("h")
+    fan = data.get("fan", "OFF")		# 데이터가 없으면 기본값 "OFF"
+    reason = data.get("reason", "-")	# 데이터가 없으면 기본값 "-"
     if temp is not None and humid is not None:
-        save_environment({"temperature": temp, "humidity": humid})
+        save_environment({"temperature": temp, "humidity": humid, "fan": fan, "reason": reason})
 
 
 def handle_alert(data):

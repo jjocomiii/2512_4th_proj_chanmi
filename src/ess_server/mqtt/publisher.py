@@ -24,11 +24,29 @@ except Exception as e:
 def publish_environment():
     """
     온습도 센서 값 발행
-    실제 센서 연동 시 STM은 {"t": ..., "h": ...} 형태로 보내도록 통일
+    실제 센서 연동 시 STM은 {"t": ..., "h": ..., "fan": ..., "reason": ...} 형태로 보내도록 통일
     """
+
+    temp = round(random.uniform(18.0, 32.0), 2)
+    humid = round(random.uniform(30.0, 80.0), 2)
+
+    fan_status = "OFF"
+    reason = "-"
+
+    if temp >= 28.0:
+        fan_status = "ON"
+        reason = "TEMP"
+    elif humid >= 60.0:
+        fan_status = "OFF"
+        reason = "HUMI"
+
+    else: fan_status = "OFF"
+
     data = {
-        "t": round(random.uniform(18.0, 30.0), 2),
-        "h": round(random.uniform(30.0, 70.0), 2)
+        "t": temp,
+        "h": humid,
+        "fan": fan_status,
+        "reason": reason
     }
 
     client.publish("ess/env", json.dumps(data))
@@ -134,8 +152,8 @@ def main():
             check_and_publish_thermal()
 
             # 수동 테스트 시 사용
-            publish_access_request("RFID_123456", "ew2")
-            publish_access_request("RFID_123456", "main")
+            # publish_access_request("RFID_123456", "ew2")
+            # publish_access_request("RFID_123456", "main")
 
             time.sleep(5)
 
