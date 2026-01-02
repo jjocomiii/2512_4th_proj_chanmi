@@ -13,7 +13,7 @@ ESSMapWidget::ESSMapWidget(QWidget *parent)
     ui->pLabelMap->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->pLabelMap->setAlignment(Qt::AlignCenter);
 
-    mapPixmap.load(":/images/img/ess_map.jpg");
+    mapPixmap.load(":/images/img/ess_map.png");
 
     overlay = new QWidget(ui->pLabelMap);
     overlay->setStyleSheet("background: transparent;");

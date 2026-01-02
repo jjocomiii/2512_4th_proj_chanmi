@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>686</width>
+    <width>850</width>
     <height>456</height>
    </rect>
   </property>
@@ -21,6 +21,16 @@
        <item>
         <widget class="QDateTimeEdit" name="pDateTimeFrom">
          <property name="dateTime">
+          <datetime>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>0</second>
+           <year>2026</year>
+           <month>1</month>
+           <day>2</day>
+          </datetime>
+         </property>
+         <property name="minimumDateTime">
           <datetime>
            <hour>0</hour>
            <minute>0</minute>
@@ -44,6 +54,33 @@
        </item>
        <item>
         <widget class="QDateTimeEdit" name="pDateTimeTo">
+         <property name="dateTime">
+          <datetime>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>0</second>
+           <year>2026</year>
+           <month>1</month>
+           <day>2</day>
+          </datetime>
+         </property>
+         <property name="minimumDateTime">
+          <datetime>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>0</second>
+           <year>2025</year>
+           <month>12</month>
+           <day>1</day>
+          </datetime>
+         </property>
+         <property name="maximumDate">
+          <date>
+           <year>9999</year>
+           <month>12</month>
+           <day>30</day>
+          </date>
+         </property>
          <property name="minimumDate">
           <date>
            <year>2025</year>
@@ -109,6 +146,16 @@
            <column>
             <property name="text">
              <string>Humi</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Fan</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Reason</string>
             </property>
            </column>
           </widget>

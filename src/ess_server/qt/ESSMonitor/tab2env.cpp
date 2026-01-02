@@ -86,7 +86,7 @@ void Tab2Env::on_pPBSearchDB_clicked()
     QString strToDateTime = toDateTime.toString("yyyy-MM-dd HH:mm:ss");
 
     QString strQuery =
-        "SELECT id, measure_time, temperature, humidity "
+        "SELECT id, measure_time, temperature, humidity, fan, reason "
         "FROM environment_data "
         "WHERE measure_time BETWEEN '" + strFromDateTime +
         "' AND '" + strToDateTime + "' "
@@ -108,6 +108,8 @@ void Tab2Env::on_pPBSearchDB_clicked()
 
         float tempVal = sqlQuery.value("temperature").toFloat();
         float humiVal = sqlQuery.value("humidity").toFloat();
+        QString fanVal = sqlQuery.value("fan").toString();
+        QString reasonVal = sqlQuery.value("reason").toString();
 
         QDateTime xValue = sqlQuery.value("measure_time").toDateTime();
         xValue.setTimeSpec(Qt::LocalTime);
@@ -124,7 +126,6 @@ void Tab2Env::on_pPBSearchDB_clicked()
         ui->pEnvTable->setItem(rowCount, 0, idItem);
 
         QTableWidgetItem *timeItem = new QTableWidgetItem(xValue.toString("yyyy-MM-dd HH:mm:ss"));
-        // timeItem->setTextAlignment(Qt::AlignCenter);
         ui->pEnvTable->setItem(rowCount, 1, timeItem);
 
 
@@ -136,11 +137,20 @@ void Tab2Env::on_pPBSearchDB_clicked()
         humiItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
         ui->pEnvTable->setItem(rowCount, 3, humiItem);
 
+        QTableWidgetItem *fanItem = new QTableWidgetItem(fanVal);
+        fanItem->setTextAlignment(Qt::AlignCenter);
+        if(fanVal.toUpper() == "ON") fanItem->setForeground(Qt::blue);
+        ui->pEnvTable->setItem(rowCount, 4, fanItem);
+
+        QTableWidgetItem *reasonItem = new QTableWidgetItem(reasonVal);
+        reasonItem->setTextAlignment(Qt::AlignCenter);
+        ui->pEnvTable->setItem(rowCount, 5, reasonItem);
+
         rowCount++;
     }
 
     // 컬럼 너비 자동 조정
-    for (int col = 0; col < 4; ++col) {
+    for (int col = 0; col < 6; ++col) {
         ui->pEnvTable->resizeColumnToContents(col);
     }
 }

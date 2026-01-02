@@ -8,6 +8,10 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSet>
+#include <QMovie>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 
 Tab1Main::Tab1Main(QWidget *parent)
     : QWidget(parent)
@@ -29,10 +33,6 @@ Tab1Main::Tab1Main(QWidget *parent)
     connect(envTimer, SIGNAL(timeout()), this, SLOT(updateEnvironment()));
     envTimer->start(5000);
 
-    // QTimer *alertTimer = new QTimer(this);
-    // connect(alertTimer, SIGNAL(timeout()), this, SLOT(updateAlert()));
-    // alertTimer->start(2000);
-
     QTimer *mapTimer = new QTimer(this);
     connect(mapTimer, SIGNAL(timeout()), this, SLOT(updateESSMap()));
     mapTimer->start(2000);
@@ -40,10 +40,26 @@ Tab1Main::Tab1Main(QWidget *parent)
     QTimer *rackTimer = new QTimer(this);
     connect(rackTimer, SIGNAL(timeout()), this, SLOT(updateBatteryRack()));
     rackTimer->start(2000);
+
+    fanMovie = new QMovie(":/images/img/fan_on.gif");
+    fanMovie->setScaledSize(QSize(64, 64));
+    ui->pLFanimg->setMovie(fanMovie);
+    fanMovie->jumpToFrame(0);
+
+    // mqtt 초기화
+    mosquitto_lib_init();
+    mosq = mosquitto_new("qt_client_id", true, NULL);
+
+    // 브로커 연결
+    if(mosquitto_connect(mosq, "10.10.14.109", 1883, 60) != MOSQ_ERR_SUCCESS){
+        qDebug() << "MQTT Broker connection failed!";
+    }
 }
 
 Tab1Main::~Tab1Main()
 {
+    mosquitto_destroy(mosq);
+    mosquitto_lib_cleanup();
     delete ui;
 }
 
@@ -58,7 +74,7 @@ void Tab1Main::updateEnvironment()
     QSqlQuery query;
 
     if(!query.exec(
-            "SELECT temperature, humidity "
+            "SELECT temperature, humidity, fan "
             "FROM environment_data "
             "ORDER BY measure_time DESC LIMIT 1"
             ))
@@ -71,7 +87,8 @@ void Tab1Main::updateEnvironment()
     {
         qDebug() << "[ENV DATA]"
                  << query.value(0).toDouble()
-                 << query.value(1).toDouble();
+                 << query.value(1).toDouble()
+                 << query.value(2).toString().toUpper();
 
         ui->pLabelTemp->setText(
             QString::number(query.value(0).toDouble(), 'f', 1) + " °C"
@@ -79,6 +96,21 @@ void Tab1Main::updateEnvironment()
         ui->pLabelHumi->setText(
             QString::number(query.value(1).toDouble(), 'f', 1) + " %"
             );
+
+        QString fanStatus = query.value(2).toString().toUpper();
+
+        if (fanStatus == "ON"){
+            if(fanMovie->state() != QMovie::Running) {
+                fanMovie->start();
+            }
+            ui->pPBFanOnOff->setChecked(true);
+            ui->pPBFanOnOff->setText("OFF");
+        }
+        else {
+            fanMovie->stop();
+            ui->pPBFanOnOff->setChecked(false);
+            ui->pPBFanOnOff->setText("ON");
+        }
     }
     else
     {
@@ -211,8 +243,40 @@ void Tab1Main::updateBatteryRack()
     if (!activeRacks.isEmpty()) {
         ui->pLabelThermal->setText(maxLevel.toUpper());
         ui->pLabelThermal->setStyleSheet(maxLevel == "warning" ? "color: orange;" : "color: red; font-weight: bold;");
-    } else {
+    }
+    else {
         ui->pLabelThermal->setText("-");
         ui->pLabelThermal->setStyleSheet("color: black;");
+    }
+}
+
+void Tab1Main::on_pPBFanOnOff_clicked(bool checked)
+{
+    // JSON 객체 생성
+    QJsonObject jsonObj;
+    jsonObj["fan"] = checked ? "ON" : "OFF";
+    jsonObj["reason"] = "MANUAL"; // 수동 조작임을 명시
+
+    // JSON을 문자열(QByteArray)로 변환
+    QJsonDocument doc(jsonObj);
+    QByteArray payload = doc.toJson(QJsonDocument::Compact); // 한 줄로 압축된 JSON
+
+    const char* topic = "ess/fan/control";
+
+    int rc = mosquitto_publish(mosq, NULL, topic, payload.length(), payload.data(), 0, false);
+
+    if(rc == MOSQ_ERR_SUCCESS) {
+        if (checked) {
+            fanMovie->start();
+            ui->pPBFanOnOff->setText("OFF");
+        }
+        else {
+            fanMovie->stop();
+            ui->pPBFanOnOff->setText("ON");
+        }
+        qDebug() << "Published:" << payload;
+    }
+    else {
+        qDebug() << "MQTT 서버에 연결되어 있지 않습니다.";
     }
 }

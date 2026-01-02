@@ -34,7 +34,7 @@
        <item>
         <widget class="QLabel" name="pLabel_msg1">
          <property name="text">
-          <string>Please Insert ID and Password</string>
+          <string>Please enter your ID and password</string>
          </property>
         </widget>
        </item>

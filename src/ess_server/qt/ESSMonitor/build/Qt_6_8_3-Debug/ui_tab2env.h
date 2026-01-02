@@ -43,7 +43,7 @@ public:
     {
         if (Tab2Env->objectName().isEmpty())
             Tab2Env->setObjectName("Tab2Env");
-        Tab2Env->resize(686, 456);
+        Tab2Env->resize(850, 456);
         verticalLayout_3 = new QVBoxLayout(Tab2Env);
         verticalLayout_3->setObjectName("verticalLayout_3");
         verticalLayout_2 = new QVBoxLayout();
@@ -52,7 +52,8 @@ public:
         horizontalLayout->setObjectName("horizontalLayout");
         pDateTimeFrom = new QDateTimeEdit(Tab2Env);
         pDateTimeFrom->setObjectName("pDateTimeFrom");
-        pDateTimeFrom->setDateTime(QDateTime(QDate(2025, 12, 1), QTime(0, 0, 0)));
+        pDateTimeFrom->setDateTime(QDateTime(QDate(2026, 1, 2), QTime(0, 0, 0)));
+        pDateTimeFrom->setMinimumDateTime(QDateTime(QDate(2025, 12, 1), QTime(0, 0, 0)));
         pDateTimeFrom->setMinimumDate(QDate(2025, 12, 1));
         pDateTimeFrom->setDisplayFormat(QString::fromUtf8("yyyy-MM-dd hh:mm"));
 
@@ -60,6 +61,9 @@ public:
 
         pDateTimeTo = new QDateTimeEdit(Tab2Env);
         pDateTimeTo->setObjectName("pDateTimeTo");
+        pDateTimeTo->setDateTime(QDateTime(QDate(2026, 1, 2), QTime(0, 0, 0)));
+        pDateTimeTo->setMinimumDateTime(QDateTime(QDate(2025, 12, 1), QTime(0, 0, 0)));
+        pDateTimeTo->setMaximumDate(QDate(9999, 12, 30));
         pDateTimeTo->setMinimumDate(QDate(2025, 12, 1));
         pDateTimeTo->setDisplayFormat(QString::fromUtf8("yyyy-MM-dd hh:mm"));
 
@@ -91,8 +95,8 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
         pEnvTable = new QTableWidget(Tab2Env);
-        if (pEnvTable->columnCount() < 4)
-            pEnvTable->setColumnCount(4);
+        if (pEnvTable->columnCount() < 6)
+            pEnvTable->setColumnCount(6);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         pEnvTable->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -101,6 +105,10 @@ public:
         pEnvTable->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         pEnvTable->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        pEnvTable->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        pEnvTable->setHorizontalHeaderItem(5, __qtablewidgetitem5);
         pEnvTable->setObjectName("pEnvTable");
 
         verticalLayout->addWidget(pEnvTable);
@@ -140,6 +148,10 @@ public:
         ___qtablewidgetitem2->setText(QCoreApplication::translate("Tab2Env", "Temp", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = pEnvTable->horizontalHeaderItem(3);
         ___qtablewidgetitem3->setText(QCoreApplication::translate("Tab2Env", "Humi", nullptr));
+        QTableWidgetItem *___qtablewidgetitem4 = pEnvTable->horizontalHeaderItem(4);
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("Tab2Env", "Fan", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = pEnvTable->horizontalHeaderItem(5);
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("Tab2Env", "Reason", nullptr));
     } // retranslateUi
 
 };

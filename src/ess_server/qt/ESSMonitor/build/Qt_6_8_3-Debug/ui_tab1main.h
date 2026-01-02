@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -22,7 +23,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Tab1Main
 {
 public:
-    QHBoxLayout *horizontalLayout_2;
+    QVBoxLayout *verticalLayout_12;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_9;
     QVBoxLayout *pMapLayout;
@@ -48,6 +49,15 @@ public:
     QLabel *label_12;
     QHBoxLayout *horizontalLayout_6;
     QLabel *pLabelHumi;
+    QVBoxLayout *pFanLayout;
+    QLabel *label_4;
+    QHBoxLayout *horizontalLayout_11;
+    QSpacerItem *horizontalSpacer;
+    QLabel *pLFanimg;
+    QSpacerItem *horizontalSpacer_3;
+    QPushButton *pPBFanOnOff;
+    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *verticalSpacer_4;
     QVBoxLayout *verticalLayout_10;
     QLabel *label_3;
     QHBoxLayout *horizontalLayout_10;
@@ -68,8 +78,8 @@ public:
         if (Tab1Main->objectName().isEmpty())
             Tab1Main->setObjectName("Tab1Main");
         Tab1Main->resize(676, 487);
-        horizontalLayout_2 = new QHBoxLayout(Tab1Main);
-        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        verticalLayout_12 = new QVBoxLayout(Tab1Main);
+        verticalLayout_12->setObjectName("verticalLayout_12");
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
         verticalLayout_9 = new QVBoxLayout();
@@ -202,6 +212,54 @@ public:
 
         pInfoLayout->addLayout(verticalLayout_7);
 
+        pFanLayout = new QVBoxLayout();
+        pFanLayout->setObjectName("pFanLayout");
+        label_4 = new QLabel(Tab1Main);
+        label_4->setObjectName("label_4");
+        label_4->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        pFanLayout->addWidget(label_4);
+
+        horizontalLayout_11 = new QHBoxLayout();
+        horizontalLayout_11->setObjectName("horizontalLayout_11");
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_11->addItem(horizontalSpacer);
+
+        pLFanimg = new QLabel(Tab1Main);
+        pLFanimg->setObjectName("pLFanimg");
+        pLFanimg->setMaximumSize(QSize(64, 64));
+        pLFanimg->setPixmap(QPixmap(QString::fromUtf8(":/images/img/fan_off.jpg")));
+        pLFanimg->setScaledContents(true);
+
+        horizontalLayout_11->addWidget(pLFanimg);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_11->addItem(horizontalSpacer_3);
+
+        pPBFanOnOff = new QPushButton(Tab1Main);
+        pPBFanOnOff->setObjectName("pPBFanOnOff");
+        pPBFanOnOff->setCheckable(true);
+
+        horizontalLayout_11->addWidget(pPBFanOnOff);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout_11->addItem(horizontalSpacer_2);
+
+
+        pFanLayout->addLayout(horizontalLayout_11);
+
+        pFanLayout->setStretch(0, 1);
+        pFanLayout->setStretch(1, 3);
+
+        pInfoLayout->addLayout(pFanLayout);
+
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        pInfoLayout->addItem(verticalSpacer_4);
+
         verticalLayout_10 = new QVBoxLayout();
         verticalLayout_10->setObjectName("verticalLayout_10");
         label_3 = new QLabel(Tab1Main);
@@ -281,14 +339,15 @@ public:
 
         pInfoLayout->setStretch(1, 1);
         pInfoLayout->setStretch(3, 3);
-        pInfoLayout->setStretch(4, 3);
+        pInfoLayout->setStretch(4, 4);
+        pInfoLayout->setStretch(6, 3);
 
         horizontalLayout->addLayout(pInfoLayout);
 
         horizontalLayout->setStretch(0, 6);
         horizontalLayout->setStretch(1, 4);
 
-        horizontalLayout_2->addLayout(horizontalLayout);
+        verticalLayout_12->addLayout(horizontalLayout);
 
 
         retranslateUi(Tab1Main);
@@ -305,6 +364,9 @@ public:
         pLabelTemp->setText(QCoreApplication::translate("Tab1Main", "--\342\204\203", nullptr));
         label_12->setText(QCoreApplication::translate("Tab1Main", "\354\212\265\353\217\204", nullptr));
         pLabelHumi->setText(QCoreApplication::translate("Tab1Main", "--%", nullptr));
+        label_4->setText(QCoreApplication::translate("Tab1Main", "HVAC Control", nullptr));
+        pLFanimg->setText(QString());
+        pPBFanOnOff->setText(QCoreApplication::translate("Tab1Main", "ON", nullptr));
         label_3->setText(QCoreApplication::translate("Tab1Main", "Emergency Alert", nullptr));
         label_15->setText(QCoreApplication::translate("Tab1Main", "\352\260\200\354\212\244", nullptr));
         pLabelGas->setText(QCoreApplication::translate("Tab1Main", "-", nullptr));

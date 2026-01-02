@@ -38,13 +38,12 @@ void LoginWindow::on_pPBtton_Login_clicked()
             cnt++;
             ui->pLineEdit_ID->clear();
             ui->pLineEdit_PW->clear();
-            ui->pLabel_status->setText(QString("Login Failed. Please retry. %1/5").arg(cnt));
+            ui->pLabel_status->setText(QString("Login Failed. Please try again. %1/5").arg(cnt));
         }
     }
     else
     {
         ui->pPBtton_Login->setEnabled(false);
-        ui->pLabel_status->setText("You have inserted wrong password 5times.");
+        ui->pLabel_status->setText("Too many failed login attempts. Please try again later.");
     }
 }
-

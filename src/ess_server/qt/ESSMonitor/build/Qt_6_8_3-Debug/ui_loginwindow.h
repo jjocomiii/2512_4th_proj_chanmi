@@ -211,7 +211,7 @@ public:
     void retranslateUi(QWidget *LoginWindow)
     {
         LoginWindow->setWindowTitle(QCoreApplication::translate("LoginWindow", "Form", nullptr));
-        pLabel_msg1->setText(QCoreApplication::translate("LoginWindow", "Please Insert ID and Password", nullptr));
+        pLabel_msg1->setText(QCoreApplication::translate("LoginWindow", "Please enter your ID and password", nullptr));
         pLabel_ID->setText(QCoreApplication::translate("LoginWindow", "ID              :", nullptr));
         pLabel_PW->setText(QCoreApplication::translate("LoginWindow", "Password:", nullptr));
         pPBtton_Login->setText(QCoreApplication::translate("LoginWindow", "Login", nullptr));

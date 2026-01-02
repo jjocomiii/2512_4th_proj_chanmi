@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     pTab4Access = new Tab4Access(ui->pTab4);
     ui->pTab4->setLayout(pTab4Access->layout());
 
-    ui->pTabWidget->setCurrentIndex(3);
+    ui->pTabWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()

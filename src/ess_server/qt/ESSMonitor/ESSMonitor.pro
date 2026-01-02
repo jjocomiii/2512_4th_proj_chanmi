@@ -1,4 +1,6 @@
-QT       += core gui charts sql
+QT       += core gui charts sql network
+
+LIBS += -lmosquitto
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
