@@ -48,7 +48,7 @@ Tab1Main::Tab1Main(QWidget *parent)
 
     // mqtt 초기화
     mosquitto_lib_init();
-    mosq = mosquitto_new("qt_client_id", true, NULL);
+    mosq = mosquitto_new("ess_gui_client", true, NULL);
 
     // 브로커 연결
     if(mosquitto_connect(mosq, "10.10.14.109", 1883, 60) != MOSQ_ERR_SUCCESS){
