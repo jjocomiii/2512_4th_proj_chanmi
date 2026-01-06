@@ -75,3 +75,85 @@
 Topic: `ess/env`
 ```json
 {"t": 23.10, "h": 55.30, "fan": "ON", "reason": "TEMP"}
+```
+
+### Alert (Gas / Thermal)
+Topic: ess/alert
+```text
+{
+  "event_type": "gas",
+  "level": "warning",
+  "value": 650,
+  "location": "zone_1",
+  "message": "Gas level elevated"
+}
+```
+
+### Access Request/Response
+Req Topic: ess/access/request
+```text
+{"admin_id":"RFID_123456","access_point":"main"}
+```
+
+Resp Topic: ess/access/response
+```text
+{"result":"success"}
+```
+
+### Project Structure
+```text
+.
+├── deploy/                 # systemd/udev/scripts (로봇/라즈베리파이 자동실행)
+├── ess_map/                # NAV2 map
+└── src/
+    ├── ess_server/         # MariaDB + MQTT subscriber + Qt UI
+    ├── ess_control_pkg/    # ROS2 control node (NAV2/상태머신 등)
+    ├── ess_mqtt_bridge_pkg/# ROS↔MQTT 브릿지(초안/실험 포함)
+    ├── esp8266/            # ESP8266(D1 mini) MQTT bridge
+    └── SGP30_3*/           # STM32 펌웨어(센서/제어)
+```
+
+### Deployment (systemd / udev)
+
+deploy/ 폴더는 로봇(또는 Pi)에서 부팅 시 자동으로 서비스가 올라오도록 구성되어 있음.
+
+udev: 카메라 심볼릭 링크(/dev/cam_rgb) 등
+
+systemd:
+
+ess-usb-camera.service : ROS2 카메라 퍼블리셔
+
+ess-aruco-move.service : ArUco 기반 정렬/복귀 노드
+
+ess-thermal-*.service : 열화상 체크/수집/게이트(환경에 따라 경로 조정 필요)
+
+환경별로 /opt/ess-guardian/current/... 같은 경로는 수정이 필요할 수 있음.
+
+### Troubleshooting (Short)
+
+STM32 하드웨어 배선 이슈: 접점/전원/그라운드 재정리로 안정화
+
+소프트 I2C Bit-banging 이슈: 타이밍 마진 조정 + 풀업/노이즈 대응
+
+ROS NAV2 이슈: TF/파라미터 튜닝으로 주행 안정화
+
+UI Update 이슈: 알림 해제 후 상태 전이 로직 보강 필요
+
+(자세한 내용: docs/TROUBLESHOOTING.md)
+
+### Roadmap
+
+이벤트 정합성(중복/쿨다운) 정책 고도화
+
+Thermal ROI / 임계값 튜닝 자동화
+
+Control Tower 기능 강화(필터/리포트/통계)
+
+## 👥 Team & Roles
+
+| Name | Role | Main Contribution |
+| :---: | :---: | :--- |
+| **김찬미**<br>(Team Leader) | **STM32 Firmware**<br>**& Hardware** | • **STM32 제어**: 센서(ADC/I2C) 데이터 수집 및 액추에이터(PWM) 제어 로직 구현<br>• **Hardware 구성**: 회로 배선 설계 및 신호 무결성/통신 안정화 작업<br>• **Project Management**: 전체 일정 조율 및 기획 총괄 |
+| **이두현** | **ROS 2 Control**<br>**& Navigation** | • **Robot Control**: ROS 2 기반 터틀봇 주행 및 제어 패키지 개발<br>• **Navigation**: Nav2 파라미터 튜닝을 통한 자율주행 최적화<br>• **Logic Design**: 상태 머신 설계를 통한 로봇의 효율적인 동작 구조 구현 |
+| **김민성** | **Computer Vision**<br>**& System Deploy** | • **Vision Pipeline**: 열화상/RGB 카메라 스트림 파이프라인 구축 및 인코딩 최적화<br>• **Auto-Docking**: ArUco 마커 기반 정밀 위치 보정(Homing) 알고리즘 구현<br>• **System Integration**: `systemd`/`udev`를 활용한 서비스 자동 실행 및 장치 관리 환경 구축 |
+| **류균봉** | **Central Server**<br>**& Control UI** | • **Control Tower**: Qt(C++) 기반의 통합 관제 대시보드 및 모니터링 시스템 개발<br>• **Backend**: MariaDB 데이터베이스 스키마 설계 및 로그 저장<br>• **Communication**: 이기종 장비 간 MQTT 데이터 프로토콜 설계 및 정합성 관리 |
