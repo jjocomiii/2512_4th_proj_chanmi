@@ -151,9 +151,36 @@ Control Tower 기능 강화(필터/리포트/통계)
 
 ## 👥 Team & Roles
 
-| Name | Role | Main Contribution |
+| Name | Role | Main Contribution (1-line) |
 | :---: | :---: | :--- |
-| **김찬미**<br>(Team Leader) | **STM32 Firmware**<br>**& Hardware** | • **STM32 제어**: 센서(ADC/I2C) 데이터 수집 및 액추에이터(PWM) 제어 로직 구현<br>• **Hardware 구성**: 회로 배선 설계 및 신호 무결성/통신 안정화 작업<br>• **Project Management**: 전체 일정 조율 및 기획 총괄 |
-| **이두현** | **ROS 2 Control**<br>**& Navigation** | • **Robot Control**: ROS 2 기반 터틀봇 주행 및 제어 패키지 개발<br>• **Navigation**: Nav2 파라미터 튜닝을 통한 자율주행 최적화<br>• **Logic Design**: 상태 머신 설계를 통한 로봇의 효율적인 동작 구조 구현 |
-| **김민성** | **Computer Vision**<br>**& System Deploy** | • **Vision Pipeline**: 열화상/RGB 카메라 스트림 파이프라인 구축 및 인코딩 최적화<br>• **Auto-Docking**: ArUco 마커 기반 정밀 위치 보정(Homing) 알고리즘 구현<br>• **System Integration**: `systemd`/`udev`를 활용한 서비스 자동 실행 및 장치 관리 환경 구축 |
-| **류균봉** | **Central Server**<br>**& Control UI** | • **Control Tower**: Qt(C++) 기반의 통합 관제 대시보드 및 모니터링 시스템 개발<br>• **Backend**: MariaDB 데이터베이스 스키마 설계 및 로그 저장<br>• **Communication**: 이기종 장비 간 MQTT 데이터 프로토콜 설계 및 정합성 관리 |
+| 김찬미 (Team Leader) | STM32 / HW | 센서 수집 + 제어 로직 + 하드웨어 안정화 및 일정 리드 |
+| 이두현 | ROS2 / Navigation | Nav2 기반 순찰/상태머신 및 주행 파라미터 튜닝 |
+| 김민성 | Vision / Deploy | ArUco Auto-Docking + 카메라 파이프라인 + systemd/udev 자동 실행 |
+| 류균봉 | Server / UI | Qt 관제 UI + MariaDB 적재 + MQTT 프로토콜/정합성 |
+
+<details>
+<summary><b>Details</b></summary>
+
+### 김찬미 (STM32 Firmware & Hardware)
+- **Firmware**: 센서(ADC/I2C) 수집 + 액추에이터(PWM) 제어 로직 구현
+- **Hardware**: 배선/전원/GND/신호 품질 점검 및 통신 안정화
+- 관련 코드: `src/SGP30_3*/`
+
+### 이두현 (ROS2 Control & Navigation)
+- **ROS2 Control**: 순찰 동작/상태 머신 구성
+- **Navigation**: Nav2 파라미터 튜닝으로 주행 안정화
+- 관련 코드: `src/ess_control_pkg/`, `ess_map/`
+
+### 김민성 (Computer Vision & System Deploy)
+- **Auto-Docking**: ArUco 기반 정렬/Homing 알고리즘(오차/hold/스케일/각도 보정) 구현
+- **Vision Pipeline**: RGB/열화상 스트림 수집→이벤트 생성→전송 흐름 구성
+- **Deploy**: systemd/udev로 부팅 자동 실행(카메라 심링크, 서비스 의존성, 재시작 정책)
+- 관련 코드: `deploy/`, `src/ess_aruco_move/`, `src/...thermal...`
+
+### 류균봉 (Central Server & Control UI)
+- **Control Tower**: Qt(C++) 관제 대시보드/모니터링 UI 구현
+- **Backend**: MariaDB 스키마/적재 및 로그 관리
+- **Protocol**: MQTT 토픽/메시지 포맷 설계 및 정합성 관리
+- 관련 코드: `src/ess_server/`
+
+</details>
