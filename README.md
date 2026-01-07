@@ -10,22 +10,54 @@
 
 
 ### Full Demo (All-in-one)
-[![full-demo](docs/assets/demo/full-demo-thumb.png)](docs/assets/vedio/full_demo.gif)
+<a href="docs/assets/video/full_demo.gif">
+  <img src="docs/assets/video/full_demo.gif" width="900">
+</a>
 
----
+### Video Clips
 
-### Video Clips (click to open)
-- ArUco Auto-Docking  
-  [![aruco](docs/assets/demo/aruco-thumb.png)](docs/assets/video/aruco.gif)
-
-- Emergency / Critical / Warning / Ventilation / RFID  
-  - [Emergency](docs/assets/video/emergency.gif)
-  - [Critical](docs/assets/video/critical.gif)
-  - [Warning](docs/assets/video/warning.gif)
-  - [Ventilation](docs/assets/video/ventilation.gif)
-  - [RFID](docs/assets/video/rfid.gif)
-  - 
----
+<table>
+  <tr>
+    <td align="center">
+      <a href="docs/assets/video/aruco.gif">
+        <img src="docs/assets/video/aruco.gif" width="260">
+      </a><br/>
+      <b>ArUco Auto-Docking</b>
+    </td>
+    <td align="center">
+      <a href="docs/assets/video/emergency.gif">
+        <img src="docs/assets/video/emergency.gif" width="260">
+      </a><br/>
+      <b>Emergency</b>
+    </td>
+    <td align="center">
+      <a href="docs/assets/video/critical.gif">
+        <img src="docs/assets/video/critical.gif" width="260">
+      </a><br/>
+      <b>Critical</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="docs/assets/video/warning.gif">
+        <img src="docs/assets/video/warning.gif" width="260">
+      </a><br/>
+      <b>Warning</b>
+    </td>
+    <td align="center">
+      <a href="docs/assets/video/ventilation.gif">
+        <img src="docs/assets/video/ventilation.gif" width="260">
+      </a><br/>
+      <b>Ventilation</b>
+    </td>
+    <td align="center">
+      <a href="docs/assets/video/rfid.gif">
+        <img src="docs/assets/video/rfid.gif" width="260">
+      </a><br/>
+      <b>RFID</b>
+    </td>
+  </tr>
+</table>
 
 ## Background
 - ESS 시설의 주요 리스크(화재/가스/환경 변화)에 대해 **“감지 → 대응 → 확인/관제”**까지 연결된 시스템 필요
@@ -43,6 +75,8 @@
 
 ## Hardware Architecture
 ![hw-arch](docs/assets/slides/hw-arch.png)
+![hw-arch2](docs/assets/slides/hw-arch2.png)
+![hw-arch3](docs/assets/slides/hw-arch3.png)
 
 ---
 
