@@ -10,9 +10,9 @@
 
 
 ### Full Demo (All-in-one)
-![full-demo](docs/assets/video/full_demo.gif)
-
----
+<a href="docs/assets/video/full_demo.gif">
+  <img src="docs/assets/video/full_demo.gif" width="900">
+</a>
 
 ### Video Clips
 
